@@ -1,0 +1,25 @@
+
+# Sample github action that executed azure load testing
+
+name: Azure Load Testing
+on: [push]
+jobs:
+  loadtest:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Login to Azure
+      uses: azure/login@v1
+      continue-on-error: false
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: 'Azure Load Testing'
+      uses: azure/load-testing@v1
+      with:
+            loadTestConfigFile: 'config.yaml'
+            loadTestResource: JP-ALT
+            resourceGroup: DeveloperVelocity
+    - uses: actions/upload-artifact@v2
+      with:
+         name: loadTestResults
+         path: ${{ github.workspace }}/loadTest
