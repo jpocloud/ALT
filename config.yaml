@@ -1,0 +1,26 @@
+displayName: basic load test
+testPlan: quick_test.jmx
+description: 
+engineInstances: 2
+testId: 32196c75-a7d7-4845-8bd4-d3ce1bea6fa0
+splitAllCSVs: False
+testName: basic load test
+failureCriteria:
+- response time: avg(response_time_ms) > 100
+- error threshhold: percentage(error) > 10
+env:
+- name: domain
+  value: store.icysky-195131fd.eastus2.azurecontainerapps.io
+- name: protocol
+  value: https
+- name: throughput_per_engine
+  value: 250
+- name: max_response_time
+  value: 500
+- name: ramp_up_time
+  value: 60
+- name: duration_in_sec
+  value: 240
+autoStop:
+  errorPercentage: 90
+  timeWindow: 60
